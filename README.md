@@ -1,1 +1,1 @@
-The mayflowerTextEngine will be a text-based processor.
+The mayflowerTextEngine is a text-based processor that will be parse text entered a user and provide a response.
