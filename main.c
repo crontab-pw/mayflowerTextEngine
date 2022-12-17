@@ -6,11 +6,13 @@
 #define CREATOR_NAME "www.crontab.pw"
 
 void initializeEngine();
+void mainLoop();
 void terminateEngine();
 
 int main (void)
 {
 	initializeEngine();
+	mainLoop();
 	terminateEngine();
 	return 0;
 }
@@ -21,6 +23,11 @@ void initializeEngine()
 	printf("initializing %s...\n", PROGRAM_NAME);
 	printf("Copyright %s %s\n", COPYRIGHT_DATE, CREATOR_NAME);
 	sleep(1);
+};
+
+void mainLoop()
+{
+
 }
 
 void terminateEngine()
