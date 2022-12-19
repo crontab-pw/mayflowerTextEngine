@@ -13,6 +13,7 @@
 int* determineTerminalSize();
 void displayCommandLine();
 void displayTitleBar();
+void getUserInput();
 void initializeEngine();
 void mainLoop();
 void terminateEngine();
@@ -48,7 +49,8 @@ void displayCommandLine() {
 	/* Display command prompt */
 	printf(COMMAND_PROMPT);
 
-	getchar();	/* Temportary place holder for user input */
+	/* Get user input */ 
+	getUserInput();
 }
 
 void displayTitleBar()
@@ -76,6 +78,11 @@ int* determineTerminalSize()
 	totalRowsColumns[0] = max.ws_row;
 	totalRowsColumns[1] = max.ws_col;
 	return totalRowsColumns;
+}
+
+void getUserInput()
+{
+	getchar();      /* Temportary place holder for user input */
 }
 
 void initializeEngine()
