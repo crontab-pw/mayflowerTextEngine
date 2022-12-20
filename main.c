@@ -95,7 +95,7 @@ void initializeEngine()
 
 	/* Clear the screen and reset cursor position */
 	printf(CLEAR_SCREEN CURSOR_HOME);
-};
+}
 
 void mainLoop()
 {
