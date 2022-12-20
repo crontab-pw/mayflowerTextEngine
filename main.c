@@ -17,7 +17,7 @@ int* determineTerminalSize();
 void displayCommandLine();
 void displayTitleBar();
 char* getUserInput();
-void parseUserInput(char*);
+int parseUserInput(char*);
 void initializeEngine();
 void mainLoop();
 void terminateEngine();
@@ -110,13 +110,19 @@ void mainLoop()
 		char *userInput;
 		userInput = getUserInput();
 
-		parseUserInput(userInput);
+		engineRunning = parseUserInput(userInput);
 	}
 }
 
-void parseUserInput(char* userInput)
+int parseUserInput(char* userInput)
 {
 	printf("Inside the parse functions: parsing %s\n", userInput);
+	
+	/* If the user types in `/quit` into the engine, shut the engine down */
+	if (strcmp(userInput, "/quit\n"))
+		return ON;
+	else
+		return OFF;
 }
 
 void terminateEngine()
