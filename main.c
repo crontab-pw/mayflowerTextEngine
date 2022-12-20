@@ -9,24 +9,25 @@
 #define COMMAND_PROMPT "<> "
 #define COPYRIGHT_DATE "2022"
 #define CREATOR_NAME "www.crontab.pw"
+#define MAXIMUM_SIZE 200
+#define OFF 0
+#define ON 1
 
 int* determineTerminalSize();
 void displayCommandLine();
 void displayTitleBar();
-void getUserInput();
+char* getUserInput();
 void initializeEngine();
 void mainLoop();
 void terminateEngine();
 
 int main (void)
 {
-	/* Determines if we loop through mainLoop() */
-	int isEngineOn = 1;
-
-	/* Initialize text engine and loop through mainLoop() */
+	/* Initialize text engine */
 	initializeEngine();
-	while(isEngineOn)
-		mainLoop();
+
+	/* Enter main loop */
+	mainLoop();
 	
 	/* Terminate text engine */
 	terminateEngine();
@@ -35,7 +36,6 @@ int main (void)
 }
 
 void displayCommandLine() {
-
 	/* Pointer to determine Row & Columns in terminal */
 	/* Element[0] determines the rows, [1] the columns */
 	int *totalRowsColumns = determineTerminalSize();
@@ -48,9 +48,6 @@ void displayCommandLine() {
 
 	/* Display command prompt */
 	printf(COMMAND_PROMPT);
-
-	/* Get user input */ 
-	getUserInput();
 }
 
 void displayTitleBar()
@@ -80,9 +77,11 @@ int* determineTerminalSize()
 	return totalRowsColumns;
 }
 
-void getUserInput()
+char* getUserInput()
 {
-	getchar();      /* Temportary place holder for user input */
+	static char userInput[MAXIMUM_SIZE] ;
+     	fgets(userInput, MAXIMUM_SIZE, stdin) ;
+	return userInput;
 }
 
 void initializeEngine()
@@ -99,8 +98,17 @@ void initializeEngine()
 
 void mainLoop()
 {
-	displayTitleBar();
-	displayCommandLine();
+	/* Determines if we loop through mainLoop() */
+        int engineRunning = ON;
+
+	while(engineRunning == ON)
+	{
+		displayTitleBar();
+		displayCommandLine();
+
+		char *userInput;
+		userInput = getUserInput();
+	}
 }
 
 void terminateEngine()
