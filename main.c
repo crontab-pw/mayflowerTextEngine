@@ -17,6 +17,7 @@ int* determineTerminalSize();
 void displayCommandLine();
 void displayTitleBar();
 char* getUserInput();
+void parseUserInput(char*);
 void initializeEngine();
 void mainLoop();
 void terminateEngine();
@@ -108,7 +109,14 @@ void mainLoop()
 
 		char *userInput;
 		userInput = getUserInput();
+
+		parseUserInput(userInput);
 	}
+}
+
+void parseUserInput(char* userInput)
+{
+	printf("Inside the parse functions: parsing %s\n", userInput);
 }
 
 void terminateEngine()
