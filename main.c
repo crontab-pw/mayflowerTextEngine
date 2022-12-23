@@ -1,3 +1,4 @@
+#include <ctype.h>
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
@@ -80,8 +81,14 @@ int* determineTerminalSize()
 
 char* getUserInput()
 {
+	/* Create userInput variable and get input from user */
 	static char userInput[MAXIMUM_SIZE] ;
      	fgets(userInput, MAXIMUM_SIZE, stdin) ;
+
+	/* Force all user input to be lower case */
+	for(int i = 0; userInput[i]; i++)
+		userInput[i] = tolower(userInput[i]);
+
 	return userInput;
 }
 
