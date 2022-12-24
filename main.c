@@ -125,6 +125,15 @@ void mainLoop()
 
 int parseUserInput(const char* userInput)
 {
+	/* Tokenize string by spaces */
+	char *tokenizedUserInput;
+	tokenizedUserInput = strtok(userInput, " ");
+	while (tokenizedUserInput != NULL)
+	{
+		printf( " %s\n", tokenizedUserInput);
+		tokenizedUserInput = strtok(NULL, " ");
+	} 
+
 	/* If the user types in `/quit` into the engine, shut the engine down */
 	if (strcmp(userInput, "/quit\n"))
 		return ON;
