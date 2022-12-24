@@ -18,7 +18,7 @@ int* determineTerminalSize();
 void displayCommandLine();
 void displayTitleBar();
 char* getUserInput();
-int parseUserInput(const char*);
+int parseUserInput(char*);
 void initializeEngine();
 void mainLoop();
 void terminateEngine();
@@ -123,16 +123,13 @@ void mainLoop()
 	}
 }
 
-int parseUserInput(const char* userInput)
+int parseUserInput(char* userInput)
 {
 	/* Tokenize string by spaces */
-	char *tokenizedUserInput;
-	tokenizedUserInput = strtok(userInput, " ");
-	while (tokenizedUserInput != NULL)
-	{
-		printf( " %s\n", tokenizedUserInput);
-		tokenizedUserInput = strtok(NULL, " ");
-	} 
+	char *token1, *token2, *tokenizedPointer;
+	token1 = strtok_r(userInput, " ", &tokenizedPointer);
+	token2 = strtok_r(NULL, " ", &tokenizedPointer);
+	printf("Token 1: %s -- Token 2: %s", token1, token2);
 
 	/* If the user types in `/quit` into the engine, shut the engine down */
 	if (strcmp(userInput, "/quit"))
