@@ -83,7 +83,7 @@ char* getUserInput()
 {
 	/* Create userInput variable and get input from user */
 	static char userInput[MAXIMUM_SIZE] ;
-     	fgets(userInput, MAXIMUM_SIZE, stdin) ;
+	gets_s(userInput, MAXIMUM_SIZE);
 
 	/* Force all user input to be lower case */
 	for(int i = 0; userInput[i]; i++)
@@ -135,7 +135,7 @@ int parseUserInput(const char* userInput)
 	} 
 
 	/* If the user types in `/quit` into the engine, shut the engine down */
-	if (strcmp(userInput, "/quit\n"))
+	if (strcmp(userInput, "/quit"))
 		return ON;
 	else
 		return OFF;
