@@ -11,6 +11,7 @@
 #define COPYRIGHT_DATE "2022"
 #define CREATOR_NAME "www.crontab.pw"
 #define MAXIMUM_SIZE 200
+#define MAXIMUM_TOKENS 2 /* Represents elements in array. 0 = first element */ 
 #define OFF 0
 #define ON 1
 
@@ -22,6 +23,7 @@ int parseUserInput(char*);
 void initializeEngine();
 void mainLoop();
 void terminateEngine();
+void tokenizeString(char *, char *tokens[MAXIMUM_TOKENS][MAXIMUM_SIZE]);
 
 int main (void)
 {
@@ -125,14 +127,11 @@ void mainLoop()
 
 int parseUserInput(char* userInput)
 {
-	/* Tokenize string by spaces */
-	char *token1, *token2, *tokenizedPointer;
-	token1 = strtok_r(userInput, " ", &tokenizedPointer);
-	token2 = strtok_r(NULL, " ", &tokenizedPointer);
-	printf("Token 1: %s -- Token 2: %s", token1, token2);
+	char *tokens[MAXIMUM_TOKENS][MAXIMUM_SIZE];
+	tokenizeString(userInput, tokens);
 
 	/* If the user types in `/quit` into the engine, shut the engine down */
-	if (strcmp(userInput, "/quit"))
+	if (strcmp(tokens[0][0], "/quit"))
 		return ON;
 	else
 		return OFF;
@@ -145,4 +144,16 @@ void terminateEngine()
 
 	/* Clear the screen and reset cursor position */
 	printf(CLEAR_SCREEN CURSOR_HOME);
+}
+
+void tokenizeString(char *userInput, char *tokens[MAXIMUM_TOKENS][MAXIMUM_SIZE])
+{
+        /* Tokenize string by spaces */
+        char *tokenizedPointer;
+
+        for (int i = 0; i <= MAXIMUM_TOKENS; i++)
+                if (i == 0)
+                        tokens[i][0] = strtok_r(userInput, " ", &tokenizedPointer);
+                else
+                        tokens[i][0] = strtok_r(NULL, " ", &tokenizedPointer);
 }
