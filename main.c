@@ -23,7 +23,8 @@ int parseUserInput(char*);
 void initializeEngine();
 void mainLoop();
 void terminateEngine();
-void tokenizeString(char *, char *tokens[MAXIMUM_TOKENS][MAXIMUM_SIZE]);
+void tokenizeString(char*, char *tokens[MAXIMUM_TOKENS][MAXIMUM_SIZE]);
+int validateTokens(char *tokens[MAXIMUM_TOKENS][MAXIMUM_SIZE]);
 
 int main (void)
 {
@@ -123,18 +124,23 @@ void mainLoop()
 		/* Parse user input */
 		engineRunning = parseUserInput(userInput);
 	}
+
 }
 
 int parseUserInput(char* userInput)
 {
+	/* Tokenize user input */
 	char *tokens[MAXIMUM_TOKENS][MAXIMUM_SIZE];
 	tokenizeString(userInput, tokens);
 
-	/* If the user types in `/quit` into the engine, shut the engine down */
-	if (strcmp(tokens[0][0], "/quit"))
-		return ON;
+	int validToken = validateTokens(tokens);
+
+	if (validToken)
+		printf("Proceed.\n\n");
 	else
-		return OFF;
+		printf("Syntax error.\n\n");
+
+	return 1;
 }
 
 void terminateEngine()
@@ -156,4 +162,26 @@ void tokenizeString(char *userInput, char *tokens[MAXIMUM_TOKENS][MAXIMUM_SIZE])
                         tokens[i][0] = strtok_r(userInput, " ", &tokenizedPointer);
                 else
                         tokens[i][0] = strtok_r(NULL, " ", &tokenizedPointer);
+}
+
+int validateTokens(char *tokens[MAXIMUM_TOKENS][MAXIMUM_SIZE])
+{
+	/* Variable see if first token is valid */
+	int validToken = OFF;
+
+	/* List of valid commands */
+	const char validCommands[][MAXIMUM_SIZE] =
+	{
+		"about",
+		"help",
+		"quit"
+	};
+
+	/* Loop through valid commands to see if first token is valid */
+	if (tokens[0][0] != NULL)
+		for (int i = 0; i < 3; i++)
+			if (strcmp(tokens[0][0], &validCommands[i][0]) == 0)
+				validToken = ON;
+
+	return validToken;
 }
