@@ -5,6 +5,7 @@
 #include <sys/ioctl.h>
 
 #include "ansidefinitions.h"
+#include "commands.h"
 
 #define PROGRAM_NAME "mayflowerTextEngine"
 #define COMMAND_PROMPT "<> "
@@ -24,7 +25,7 @@ void initializeEngine();
 void mainLoop();
 void terminateEngine();
 void tokenizeString(char*, char *tokens[MAXIMUM_TOKENS][MAXIMUM_SIZE]);
-int validateTokens(char *tokens[MAXIMUM_TOKENS][MAXIMUM_SIZE]);
+int validateTokens(char *tokens[MAXIMUM_TOKENS][MAXIMUM_SIZE], char *commandToExecute);
 
 int main (void)
 {
@@ -133,14 +134,22 @@ int parseUserInput(char* userInput)
 	char *tokens[MAXIMUM_TOKENS][MAXIMUM_SIZE];
 	tokenizeString(userInput, tokens);
 
-	int validToken = validateTokens(tokens);
+	char *commandToExecute[MAXIMUM_SIZE];
 
-	if (validToken)
-		printf("Proceed.\n\n");
+	if (tokens[0][0] == NULL)
+		return ON;
+	else if ((strcmp(tokens[0][0], "/quit") == 0))
+		return OFF;
 	else
-		printf("Syntax error.\n\n");
+	{
+		int validToken = validateTokens(tokens, commandToExecute);
+		if (validToken)
+			call_function(commandToExecute);
+		else
+			printf("Syntax error. Type 'help' for a list of commands.\n\n");
 
-	return 1;
+		return ON;
+	}
 }
 
 void terminateEngine()
@@ -164,24 +173,18 @@ void tokenizeString(char *userInput, char *tokens[MAXIMUM_TOKENS][MAXIMUM_SIZE])
                         tokens[i][0] = strtok_r(NULL, " ", &tokenizedPointer);
 }
 
-int validateTokens(char *tokens[MAXIMUM_TOKENS][MAXIMUM_SIZE])
+int validateTokens(char *tokens[MAXIMUM_TOKENS][MAXIMUM_SIZE], char *commandToExecute)
 {
 	/* Variable see if first token is valid */
 	int validToken = OFF;
 
-	/* List of valid commands */
-	const char validCommands[][MAXIMUM_SIZE] =
-	{
-		"about",
-		"help",
-		"quit"
-	};
-
 	/* Loop through valid commands to see if first token is valid */
-	if (tokens[0][0] != NULL)
-		for (int i = 0; i < 3; i++)
-			if (strcmp(tokens[0][0], &validCommands[i][0]) == 0)
-				validToken = ON;
+	for (int i = 0; i < 3; i++)
+		if (strcmp(tokens[0][0], &validCommands[i][0]) == 0)
+		{
+			validToken = ON;
+			strcpy(commandToExecute, &validCommands[i][1]);
+		}
 
 	return validToken;
 }
