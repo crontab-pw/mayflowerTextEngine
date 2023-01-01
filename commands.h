@@ -10,6 +10,9 @@ void commandHelp();
                 {"/quit", "\0"}
         };
 
+/* Determine  number of rows in validCommands[][][] */
+int numberOfValidComands = sizeof(validCommands) / sizeof(validCommands[0]);
+
 const static struct {
   const char *name;
   void (*func)(void);

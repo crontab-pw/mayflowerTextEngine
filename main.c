@@ -179,7 +179,7 @@ int validateTokens(char *tokens[MAXIMUM_TOKENS][MAXIMUM_SIZE], char *commandToEx
 	int validToken = OFF;
 
 	/* Loop through valid commands to see if first token is valid */
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < numberOfValidComands; i++)
 		if (strcmp(tokens[0][0], &validCommands[i][0]) == 0)
 		{
 			validToken = ON;
