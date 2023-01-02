@@ -1,13 +1,16 @@
+/* Include C headers */
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
 #include <sys/ioctl.h>
 
+/* Include custom definitions */
 #include "programdefinitions.h"
 #include "ansidefinitions.h"
 #include "commands.h"
 
+/* Function prototypes */
 int* determineTerminalSize();
 void displayCommandLine();
 void displayTitleBar();
@@ -91,13 +94,15 @@ char* getUserInput()
 void initializeEngine()
 {
 	/* Clear the screen and reset cursor position */
-        printf(CLEAR_SCREEN CURSOR_HOME);
+        printf(CLEAR_SCREEN);
+	printf(CURSOR_HOME);
 	printf("initializing %s...\n", PROGRAM_NAME);
 	printf("Copyright %s %s\n", COPYRIGHT_DATE, CREATOR_NAME);
 	sleep(1);
 
 	/* Clear the screen and reset cursor position */
-	printf(CLEAR_SCREEN CURSOR_HOME);
+	printf(CLEAR_SCREEN);
+	printf(CURSOR_HOME);
 }
 
 void mainLoop()
@@ -126,9 +131,11 @@ int parseUserInput(char* userInput)
 	char *tokens[MAXIMUM_TOKENS][MAXIMUM_SIZE];
 	tokenizeString(userInput, tokens);
 
+	/* Create pointer to hold command */
 	char *commandToExecute[MAXIMUM_SIZE];
 
-	if (tokens[0][0] == NULL)
+	/* Determine value of command */
+	if (tokens[0][0] == NULL) /* No input from user */
 		return ON;
 	else if ((strcmp(tokens[0][0], "/quit") == 0))
 		return OFF;
@@ -150,7 +157,8 @@ void terminateEngine()
 	printf(DEFAULT_COLORS);
 
 	/* Clear the screen and reset cursor position */
-	printf(CLEAR_SCREEN CURSOR_HOME);
+	printf(CLEAR_SCREEN);
+	printf(CURSOR_HOME);
 }
 
 void tokenizeString(char *userInput, char *tokens[MAXIMUM_TOKENS][MAXIMUM_SIZE])
