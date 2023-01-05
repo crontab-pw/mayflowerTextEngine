@@ -20,7 +20,7 @@ void initializeEngine();
 void mainLoop();
 void terminateEngine();
 void tokenizeString(char*, char *tokens[MAXIMUM_TOKENS][MAXIMUM_SIZE]);
-int validateTokens(char *tokens[MAXIMUM_TOKENS][MAXIMUM_SIZE], char *commandToExecute);
+int validateTokens(char *tokens[MAXIMUM_TOKENS][MAXIMUM_SIZE], char commandToExecute[]);
 
 int main (void)
 {
@@ -132,7 +132,7 @@ int parseUserInput(char* userInput)
 	tokenizeString(userInput, tokens);
 
 	/* Create pointer to hold command */
-	char *commandToExecute[MAXIMUM_SIZE];
+	char commandToExecute[MAXIMUM_SIZE];
 
 	/* Determine value of command */
 	if (tokens[0][0] == NULL) /* No input from user */
@@ -173,17 +173,17 @@ void tokenizeString(char *userInput, char *tokens[MAXIMUM_TOKENS][MAXIMUM_SIZE])
                         tokens[i][0] = strtok_r(NULL, " ", &tokenizedPointer);
 }
 
-int validateTokens(char *tokens[MAXIMUM_TOKENS][MAXIMUM_SIZE], char *commandToExecute)
+int validateTokens(char *tokens[MAXIMUM_TOKENS][MAXIMUM_SIZE], char commandToExecute[])
 {
 	/* Variable see if first token is valid */
 	int validToken = OFF;
 
 	/* Loop through valid commands to see if first token is valid */
 	for (int i = 0; i < numberOfValidComands; i++)
-		if (strcmp(tokens[0][0], &validCommands[i][0]) == 0)
+		if (strcmp(tokens[0][0], validCommands[i][0]) == 0)
 		{
 			validToken = ON;
-			strcpy(commandToExecute, &validCommands[i][1]);
+			strcpy(commandToExecute, validCommands[i][1]);
 		}
 
 	return validToken;
