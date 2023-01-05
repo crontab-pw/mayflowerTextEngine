@@ -42,7 +42,7 @@ void commandAbout()
 
 void commandHelp()
 {
-        printf("Help with %s - List of commands available:\n", PROGRAM_NAME);
+        printf("List of commands available:\n");
 
         /* Loop through valid commands and display results  */
         for (int i = 0; i < numberOfValidComands; i++)
