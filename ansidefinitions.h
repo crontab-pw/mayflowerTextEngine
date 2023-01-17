@@ -4,4 +4,5 @@
 #define DEFAULT_COLORS  "\033[39;49m"
 #define DRAW_TITLEBAR   "\033[2;44;44m "
 #define DISPLAY_TITLE   "\033[1;%luH%s"
-
+#define HIDE_CURSOR	"\033[?25l"
+#define SHOW_CURSOR	"\033[?25h"

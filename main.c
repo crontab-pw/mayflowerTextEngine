@@ -112,8 +112,10 @@ void mainLoop()
 
 	while(engineRunning == ON)
 	{
+		printf(HIDE_CURSOR);
 		displayTitleBar();
 		displayCommandLine();
+		printf(SHOW_CURSOR);
 
 		/* Get user input  */
 		char *userInput;
